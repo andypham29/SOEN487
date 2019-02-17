@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOEN 487</title>
+    <style>
+        table td {
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h2>{{ json.title|format|safe }}</h2><br>
+    {{ json.student.id|format|safe }}<br>
+    {{ json.student.name|format|safe }}<br><br>
+    <hr>
+</div>
+
+
+<table cellpadding="20px">
+    <tr>
+
+    </tr>
+    <tr>
+        <td>
+            <pre>
+                    _----_    _________       /\
+                   /      \  /         \/\ __///
+                  (        \/          / > /   \
+                   \        |      --/_>_/    /
+                     \_ ____|          \ /\ _/
+                       /               ///        __\
+                      (               // \       /  \\
+                       \      \     ///    \    /    \\
+                        (      \   //       \  /\  _  \\
+                         \   ___|///    _    \/  \/ \__)\
+                          ( / _ //\    ( \       /
+                           /_ /// /     \ \ _   /
+                           (__)  ) \_    \   --~
+                           ///--/    \____\
+                          //        __)    \
+                        ///        (________)
+             _________///          ===========
+            //|_____|///
+            </pre>
+        </td>
+        <td>
+            <h1>Add Player</h1>
+            <form method="post" action="/player">
+                player name: <input type="text" name="name"><br>
+                team id: <input type="number" name="team_id" min="1"><br>
+                <input type="submit" value="Add">
+            </form>
+        </td>
+        <td>
+            <h1>Add Team</h1>
+            <form method="post" action="/team">
+                team name: <input type="text" name="team_name"><br>
+                association:
+                <select name="association">
+                    <option value="east">east</option>
+                    <option value="west">west</option>
+                </select><br>
+                division: <input type="text" name="division"><br>
+                city id: <input type="number" name="city_id" min="1"><br>
+                <input type="submit" value="Add">
+            </form>
+        </td>
+        <td>
+            <h1>Add City</h1>
+            <form method="post" action="/city">
+                city name: <input type="text" name="city_name"><br>
+                country:
+                <select name="country">
+                    <option value="us">us</option>
+                    <option value="canada">canada</option>
+                </select><br>
+                <input type="submit" value="Add">
+            </form>
+        </td>
+    </tr>
+</table>
+<hr>
+<div>
+    <table cellpadding="10px" align="center">
+        <tr>
+            <td>{% include 'players.html' %}</td>
+            <td>{% include 'teams.html' %}</td>
+            <td>{% include 'cities.html' %}</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

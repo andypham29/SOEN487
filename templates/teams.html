@@ -1,0 +1,31 @@
+<h1>Teams</h1>
+
+<table cellpadding="5px" border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>conference</th>
+        <th>division</th>
+        <th>city id</th>
+    </tr>
+    {% for team in teams %}
+        <form method="post" action="/team">
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" value="{{ team.id }}" name="id">
+        <tr>
+            <td>{{ team.id }}</td>
+            <td><input type="text" value="{{ team.team_name }}" name="team_name"></td>
+            <td>
+                <select name="association">
+                    <option value="{{ team.association }}" selected="selected">{{ team.association }}</option>
+                    <option value="east">east</option>
+                    <option value="west">west</option>
+                </select>
+            </td>
+            <td><input type="text" value="{{ team.division }}" name="division"></td>
+            <td><input type="number" min="1" value="{{ team.city_id }}" name="city_id" style="width: 30px;"></td>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+        </form>
+    {% endfor %}
+</table>

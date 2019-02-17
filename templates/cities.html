@@ -1,0 +1,21 @@
+<h1>Cities</h1>
+
+<table cellpadding="5px" border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>country</th>
+    </tr>
+    {% for city in cities%}
+         <form method="post" action="/city">
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" value="{{ city.id }}" name="id">
+        <tr>
+            <td>{{ city.id }}</td>
+            <td><input type="text" value="{{ city.city_name }}" name="city_name"></td>
+            <td><input type="text" value="{{ city.country}}" name="country"></td>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+         </form>
+    {% endfor %}
+</table>

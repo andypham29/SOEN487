@@ -1,0 +1,21 @@
+<h1>Players</h1>
+
+<table cellpadding="5px" border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>team id</th>
+    </tr>
+    {% for player in players %}
+        <form method="post" action="/player">
+            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" value="{{ player.id }}" name="id">
+            <tr>
+                <td>{{ player.id }}</td>
+                <td><input type="text" value="{{ player.name }}" name="name"></td>
+                <td><input type="number" min="1" value="{{ player.team_id }}" name="team_id" style="width: 30px;"></td>
+                <td><input type="submit" value="Update"></td>
+            </tr>
+        </form>
+    {% endfor %}
+</table>
