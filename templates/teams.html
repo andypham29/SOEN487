@@ -10,7 +10,7 @@
     </tr>
     {% for team in teams %}
         <form method="post" action="/team">
-            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" name="_method" value="put"/>
             <input type="hidden" value="{{ team.id }}" name="id">
         <tr>
             <td>{{ team.id }}</td>
@@ -23,9 +23,15 @@
                 </select>
             </td>
             <td><input type="text" value="{{ team.division }}" name="division"></td>
-            <td><input type="number" min="1" value="{{ team.city_id }}" name="city_id" style="width: 30px;"></td>
-            <td><input type="submit" value="Update"></td>
+            <td><input id="id_input" type="number" min="1" value="{{ team.city_id }}" name="city_id"></td>
+            <td>
+                <input type="submit" value="Update"></form><br>
+                <form method="post" action="/team/{{team.id}}">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" value="{{team.team_name}}" name="title">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
-        </form>
     {% endfor %}
 </table>
