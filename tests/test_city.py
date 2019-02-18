@@ -32,17 +32,17 @@ class TestCity(unittest.TestCase):
         # convert the response data from json and call the asserts
         city_list = json.loads(str(response.data, "utf8"))
         self.assertEqual(type(city_list), list)
-        self.assertDictEqual(city_list[0], {"id": "1", "name": "Alice"})
-        self.assertDictEqual(city_list[1], {"id": "2", "name": "Bob"})
+        self.assertDictEqual(city_list[0], {"id": "1", "city_name": "montreal", "country": "canada"})
+        self.assertDictEqual(city_list[1], {"id": "2", "city_name": "boston", "country": "us"})
 
     def test_get_city_with_valid_id(self):
         # send the request and check the response status code
-        response = self.app.get("/city/1")
+        response = self.app.get("/city/2")
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
         city = json.loads(str(response.data, "utf8"))
-        self.assertDictEqual(city, {"id": "1", "name": "Alice"})
+        self.assertDictEqual(city, {"id": "2", "city_name": "boston", "country": "us"})
 
     def test_get_city_with_invalid_id(self):
         # send the request and check the response status code
@@ -81,3 +81,13 @@ class TestCity(unittest.TestCase):
         # check if the DB was updated correctly
         city = City.query.filter_by(id=2).first()
         self.assertEqual(city.city_name, "carolina")
+
+    def test_delete_city_with_id(self):
+        # send the request and check the response status code
+        init_name = City.query.filter_by(id=1).first().city_name
+        init_count = City.query.filter_by(city_name=init_name).count()
+        response = self.app.delete("/city/1")
+        updated_count = City.query.filter_by(city_name=init_name).count()
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(updated_count, init_count - 1)
