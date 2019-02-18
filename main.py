@@ -20,6 +20,14 @@ def page_not_found(e):
 def soen487_a1():
     json = {"title": "SOEN487 Assignment 1",
             "student": {"id": "40006071", "name": "Andy Pham"}}
+
+    return jsonify(json)
+
+
+@app.route('/home')
+def home():
+    json = {"title": "SOEN487 Assignment 1",
+            "student": {"id": "40006071", "name": "Andy Pham"}}
     players = Player.query.all()
     teams = Team.query.all()
     cities = City.query.all()

@@ -8,13 +8,20 @@
     </tr>
     {% for player in players %}
         <form method="post" action="/player">
-            <input type="hidden" name="_method" value="PUT"/>
+            <input type="hidden" name="_method" value="put"/>
             <input type="hidden" value="{{ player.id }}" name="id">
             <tr>
                 <td>{{ player.id }}</td>
                 <td><input type="text" value="{{ player.name }}" name="name"></td>
                 <td><input id="id_input" type="number" min="1" value="{{ player.team_id }}" name="team_id"></td>
-                <td><input type="submit" value="Update"></td>
+                <td>
+                    <input type="submit" value="Update"></form><br>
+                    <form method="post" action="/player/{{player.id}}">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="hidden" value="{{player.name}}" name="name">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
             </tr>
         </form>
     {% endfor %}

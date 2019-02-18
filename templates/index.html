@@ -7,11 +7,13 @@
         table td {
             vertical-align: top;
         }
+
         input {
-            width: 100px;
+            width: 120px;
         }
+
         #id_input {
-            width: 30px;
+            width: 50px;
         }
     </style>
 </head>
@@ -54,35 +56,71 @@
         <td>
             <h1>Add Player</h1>
             <form method="post" action="/player">
-                player name: <input type="text" name="name"><br>
-                team id: <input type="number" name="team_id" min="1"><br>
-                <input type="submit" value="Add">
+                <table>
+                    <tr>
+                        <td>player name:</td>
+                        <td><input type="text" name="name"><br></td>
+                    </tr>
+                    <tr>
+                        <td> team id:</td>
+                        <td><input type="number" name="team_id" min="1"><br></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Add"></td>
+                    </tr>
+                </table>
             </form>
         </td>
         <td>
             <h1>Add Team</h1>
             <form method="post" action="/team">
-                team name: <input type="text" name="team_name"><br>
-                association:
-                <select name="association">
-                    <option value="east">east</option>
-                    <option value="west">west</option>
-                </select><br>
-                division: <input type="text" name="division"><br>
-                city id: <input type="number" name="city_id" min="1"><br>
-                <input type="submit" value="Add">
+                <table>
+                    <tr>
+                        <td>team name:</td>
+                        <td><input type="text" name="team_name"><br></td>
+                    </tr>
+                    <tr>
+                        <td>association:</td>
+                        <td><select name="association">
+                            <option value="east">east</option>
+                            <option value="west">west</option>
+                        </select><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>division:</td>
+                        <td><input type="text" name="division"><br></td>
+                    </tr>
+                    <tr>
+                        <td>city id:</td>
+                        <td><input type="number" name="city_id" min="1"><br></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Add"></td>
+                    </tr>
+                </table>
             </form>
         </td>
         <td>
             <h1>Add City</h1>
             <form method="post" action="/city">
-                city name: <input type="text" name="city_name"><br>
-                country:
-                <select name="country">
-                    <option value="us">us</option>
-                    <option value="canada">canada</option>
-                </select><br>
-                <input type="submit" value="Add">
+                <table>
+                    <tr>
+                        <td>city name:</td>
+                        <td><input type="text" name="city_name"><br></td>
+                    </tr>
+                    <tr>
+                        <td>country:</td>
+                    <td><select name="country">
+                        <option value="us">us</option>
+                        <option value="canada">canada</option>
+                    </select><br>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Add"></td>
+                    </tr>
+                </table>
             </form>
         </td>
     </tr>

@@ -28,4 +28,4 @@ class TestApp(unittest.TestCase):
         body = json.loads(str(response.data, "utf8"))
         self.assertEqual(body["title"], "SOEN487 Assignment 1")
         student = body["student"]
-        self.assertDictEqual(student, {"id": "Your id#", "name": "Your name"})
+        self.assertDictEqual(student, {"id": "40006071", "name": "Andy Pham"})
