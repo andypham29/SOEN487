@@ -55,10 +55,10 @@ class TestCity(unittest.TestCase):
 
     def test_put_city_without_id(self):
         # do we really need to check counts?
-        initial_count = City.query.filter_by(city_name="Amy").count()
+        initial_count = City.query.filter_by(city_name="boston").count()
 
         # send the request and check the response status code
-        response = self.app.put("/city", data={"name": "Amy"})
+        response = self.app.put("/city", data={"city_name": "boston", "country": "us"})
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
@@ -66,12 +66,12 @@ class TestCity(unittest.TestCase):
         self.assertDictEqual(body, {"code": 200, "msg": "success"})
 
         # check if the DB was updated correctly
-        updated_count = City.query.filter_by(name="Amy").count()
-        self.assertEqual(updated_count, initial_count+1)
+        updated_count = City.query.filter_by(city_name="boston").count()
+        self.assertEqual(updated_count, initial_count + 1)
 
-    def test_put_city_with_new_id(self):
+    def test_put_city_with_id(self):
         # send the request and check the response status code
-        response = self.app.put("/city", data={"id": 3, "name": "Amy"})
+        response = self.app.put("/city", data={"id": 2, "city_name": "carolina", "country": "us"})
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
@@ -79,5 +79,5 @@ class TestCity(unittest.TestCase):
         self.assertDictEqual(body, {"code": 200, "msg": "success"})
 
         # check if the DB was updated correctly
-        city = City.query.filter_by(id=3).first()
-        self.assertEqual(city.name, "Amy")
+        city = City.query.filter_by(id=2).first()
+        self.assertEqual(city.city_name, "carolina")
