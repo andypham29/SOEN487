@@ -80,7 +80,7 @@ def put_player():
     return jsonify({"code": 200, "msg": "success"})
 
 
-@app.route("/player/<player_id>", methods={"POST"})
+@app.route("/player/<player_id>", methods=["POST", "DELETE"])
 def delete_player(player_id):
     player = Player.query.filter_by(id=player_id).first()
     if player:

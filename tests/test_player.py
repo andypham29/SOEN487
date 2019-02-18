@@ -17,6 +17,7 @@ class TestPlayer(unittest.TestCase):
         self.db.session.add(Team(id=2, team_name="canadiens", association="east", division="atlantic", city_id=1))
         self.db.session.add(Player(id=1, name="Maurice Richard", team_id=1))
         self.db.session.add(Player(id=2, name="PK Subban", team_id=1))
+        self.db.session.add(Player(id=3, name="Paul Byron", team_id=1))
         self.db.session.commit()
 
         self.app = tested_app.test_client()
@@ -87,3 +88,13 @@ class TestPlayer(unittest.TestCase):
         player = Player.query.filter_by(id=2).first()
         self.assertEqual(init_val, "PK Subban")
         self.assertEqual(player.name, "Shea Weber")
+
+    def test_delete_player_with_id(self):
+        # send the request and check the response status code
+        init_name = Player.query.filter_by(id=3).first().name
+        init_count = Player.query.filter_by(name=init_name).count()
+        response = self.app.delete("/player/3")
+        updated_count = Player.query.filter_by(name=init_name).count()
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(updated_count, init_count - 1)
