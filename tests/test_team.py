@@ -68,7 +68,8 @@ class TestTeam(unittest.TestCase):
         initial_count = Team.query.filter_by(team_name="islanders").count()
 
         # send the request and check the response status code
-        response = self.app.put("/team", data={"team_name": "rangers"})
+        response = self.app.put("/team", data={"team_name": "islanders", "association": "east",
+                                               "city_id": "1", "division": "metropolitan"})
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
@@ -76,12 +77,13 @@ class TestTeam(unittest.TestCase):
         self.assertDictEqual(body, {"code": 200, "msg": "success"})
 
         # check if the DB was updated correctly
-        updated_count = Team.query.filter_by(team_name="rangers").count()
+        updated_count = Team.query.filter_by(team_name="islanders").count()
         self.assertEqual(updated_count, initial_count + 1)
 
     def test_put_team_with_new_id(self):
         # send the request and check the response status code
-        response = self.app.put("/team", data={"id": 3, "team_name": "rangers"})
+        response = self.app.put("/team", data={"id": "1", "team_name": "rangers", "association": "east",
+                                               "city_id": "1", "division": "metropolitan"})
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
@@ -89,5 +91,5 @@ class TestTeam(unittest.TestCase):
         self.assertDictEqual(body, {"code": 200, "msg": "success"})
 
         # check if the DB was updated correctly
-        team = Team.query.filter_by(id=3).first()
+        team = Team.query.filter_by(id=1).first()
         self.assertEqual(team.team_name, "rangers")
