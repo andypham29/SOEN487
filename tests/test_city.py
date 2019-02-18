@@ -55,7 +55,7 @@ class TestCity(unittest.TestCase):
 
     def test_put_city_without_id(self):
         # do we really need to check counts?
-        initial_count = City.query.filter_by(name="Amy").count()
+        initial_count = City.query.filter_by(city_name="Amy").count()
 
         # send the request and check the response status code
         response = self.app.put("/city", data={"name": "Amy"})

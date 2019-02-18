@@ -73,9 +73,10 @@ class TestPlayer(unittest.TestCase):
         updated_count = Player.query.filter_by(name="Henri Richard").count()
         self.assertEqual(updated_count, initial_count+1)
 
-    def test_put_player_with_new_id(self):
+    def test_put_player_with_id(self):
         # send the request and check the response status code
-        response = self.app.put("/player", data={"id": 3, "name": "Henri Richard"})
+        init_val = Player.query.filter_by(id=2).first().name
+        response = self.app.put("/player", data={"id": "2", "name": "Shea Weber", "team_id": "1"})
         self.assertEqual(response.status_code, 200)
 
         # convert the response data from json and call the asserts
@@ -83,5 +84,6 @@ class TestPlayer(unittest.TestCase):
         self.assertDictEqual(body, {"code": 200, "msg": "success"})
 
         # check if the DB was updated correctly
-        player = Player.query.filter_by(id=3).first()
-        self.assertEqual(player.name, "Henri Richard")
+        player = Player.query.filter_by(id=2).first()
+        self.assertEqual(init_val, "PK Subban")
+        self.assertEqual(player.name, "Shea Weber")

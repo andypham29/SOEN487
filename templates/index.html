@@ -15,11 +15,14 @@
         #id_input {
             width: 50px;
         }
+        input[type=submit]{
+            width: 80px;
+        }
     </style>
 </head>
 <body>
 <div align="center">
-    <h2>{{ json.title|format|safe }}</h2><br>
+    <h1>{{ json.title|format|safe }}</h1><br>
     {{ json.student.id|format|safe }}<br>
     {{ json.student.name|format|safe }}<br><br>
     <hr>

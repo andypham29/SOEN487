@@ -52,19 +52,7 @@ def get_player(player_id):
         return make_response(jsonify({"code": 404, "msg": "Cannot find this player id."}), 404)
 
 
-@app.route("/player", methods={"POST"})
-def post_player():
-    name = request.form.get("name")
-    team_id = request.form.get("team_id")
-    player = Player(name=name, team_id=team_id)
-
-    db.session.add(player)
-    db.session.commit()
-
-    return jsonify({"code": 200, "msg": "success"})
-
-
-@app.route("/player", methods={"PUT"})
+@app.route("/player", methods=["POST", "PUT"])
 def put_player():
     # get the name first, if no name then fail
     name = request.form.get("name")
@@ -75,10 +63,12 @@ def put_player():
     player_id = request.form.get("id")
     if not player_id:
         p = Player(name=name, team_id=team_id)
+        db.session.add(p)
     else:
-        p = Player(id=player_id, name=name, team_id=team_id)
+        p = Player.query.get(player_id)
+        p.name = name
+        p.team_id = team_id
 
-    db.session.add(p)
     try:
         db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
@@ -87,10 +77,10 @@ def put_player():
         if app.config.get("DEBUG"):
             error += str(e)
         return make_response(jsonify({"code": 404, "msg": error}), 404)
-    return jsonify({"code": 200, "msg": player_id})
+    return jsonify({"code": 200, "msg": "success"})
 
 
-@app.route("/player/<player_id>", methods={"DELETE"})
+@app.route("/player/<player_id>", methods={"POST"})
 def delete_player(player_id):
     player = Player.query.filter_by(id=player_id).first()
     if player:
@@ -119,21 +109,7 @@ def get_team(team_id):
         return make_response(jsonify({"code": 404, "msg": "Cannot find this team id."}), 404)
 
 
-@app.route("/team", methods={"POST"})
-def post_team():
-    team_name = request.form.get("team_name")
-    association = request.form.get("association")
-    division = request.form.get("division")
-    city_id = request.form.get("city_id")
-    team = Team(team_name=team_name, association=association, division=division, city_id=city_id)
-
-    db.session.add(team)
-    db.session.commit()
-
-    return jsonify({"code": 200, "msg": "success"})
-
-
-@app.route("/team", methods={"PUT"})
+@app.route("/team", methods=["POST", "PUT"])
 def put_team():
     # get the name first, if no name then fail
     team_name = request.form.get("team_name")
@@ -145,11 +121,15 @@ def put_team():
                                       "msg": "Cannot put team. Missing mandatory fields."}), 403)
     team_id = request.form.get("id")
     if not team_id:
-        p = Team(team_name=team_name, association=association, division=division, city_id=city_id)
+        t = Team(team_name=team_name, association=association, division=division, city_id=city_id)
+        db.session.add(t)
     else:
-        p = Team(id=team_id, team_name=team_name, association=association, division=division, city_id=city_id)
+        t = Team.query.get(team_id)
+        t.team_name = team_name
+        t.association = association
+        t.division = division
+        t.city_id = city_id
 
-    db.session.add(p)
     try:
         db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
@@ -158,7 +138,7 @@ def put_team():
         if app.config.get("DEBUG"):
             error += str(e)
         return make_response(jsonify({"code": 404, "msg": error}), 404)
-    return jsonify({"code": 200, "msg": team_id})
+    return jsonify({"code": 200, "msg": "success"})
 
 
 @app.route("/team/<team_id>", methods={"DELETE"})
@@ -190,33 +170,23 @@ def get_city(city_id):
         return make_response(jsonify({"code": 404, "msg": "Cannot find this city id."}), 404)
 
 
-@app.route("/city", methods={"POST"})
-def post_city():
-    city_name = request.form.get("city_name")
-    country = request.form.get("country")
-    city = City(city_name=city_name, country=country)
-
-    db.session.add(city)
-    db.session.commit()
-
-    return jsonify({"code": 200, "msg": "success"})
-
-
-@app.route("/city", methods={"PUT"})
+@app.route("/city", methods=["POST", "PUT"])
 def put_city():
     # get the name first, if no name then fail
-    name = request.form.get("name")
-    team_id = request.form.get("team_id")
+    name = request.form.get("city_name")
+    country = request.form.get("country")
     if not name:
         return make_response(jsonify({"code": 403,
                                       "msg": "Cannot put city. Missing mandatory fields."}), 403)
     city_id = request.form.get("id")
     if not city_id:
-        p = City(name=name, team_id=team_id)
+        c = City(city_name=name, country=country)
+        db.session.add(c)
     else:
-        p = City(id=city_id, name=name, team_id=team_id)
+        c = City.query.get(city_id)
+        c.city_name = name
+        c.country = country
 
-    db.session.add(p)
     try:
         db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
@@ -225,7 +195,7 @@ def put_city():
         if app.config.get("DEBUG"):
             error += str(e)
         return make_response(jsonify({"code": 404, "msg": error}), 404)
-    return jsonify({"code": 200, "msg": city_id})
+    return jsonify({"code": 200, "msg": "success"})
 
 
 @app.route("/city/<city_id>", methods={"DELETE"})
