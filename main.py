@@ -141,7 +141,7 @@ def put_team():
     return jsonify({"code": 200, "msg": "success"})
 
 
-@app.route("/team/<team_id>", methods={"DELETE"})
+@app.route("/team/<team_id>", methods=["POST", "DELETE"])
 def delete_team(team_id):
     team = Team.query.filter_by(id=team_id).first()
     if team:
@@ -198,7 +198,7 @@ def put_city():
     return jsonify({"code": 200, "msg": "success"})
 
 
-@app.route("/city/<city_id>", methods={"DELETE"})
+@app.route("/city/<city_id>", methods=["POST", "DELETE"])
 def delete_city(city_id):
     city = City.query.filter_by(id=city_id).first()
     if city:
